@@ -4,3 +4,6 @@ __pycache__
 project/_config.py
 *.swp
 *.swo
+/tags
+.coverage
+/htmlcov
