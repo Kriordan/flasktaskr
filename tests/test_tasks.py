@@ -187,5 +187,57 @@ class TasksTests(unittest.TestCase):
                          response.data)
 
 
+    def test_task_template_displays_logged_in_user_name(self):
+        self.register(
+            'Christopher', 'chris@test.com', 'password', 'password'
+        )
+        self.login('Christopher', 'password')
+        response = self.app.get('tasks/', follow_redirects=True)
+        self.assertIn(b'Christopher', response.data)
+
+
+    def test_users_cannot_see_task_modify_links_for_tasks_not_created_by_them(self):
+        self.register('Howard', 'ho@ward.com', 'password', 'password')
+        self.login('Howard', 'password')
+        self.app.get('tasks/', follow_redirects=True)
+        self.create_task()
+        self.logout()
+        self.register('Hamlet', 'ham@let.com', 'password', 'password')
+        self.login('Hamlet', 'password')
+        response = self.app.get('tasks/', follow_redirects=True)
+        self.assertNotIn(b'Complete', response.data)
+        self.assertNotIn(b'Delete', response.data)
+
+
+    def test_users_can_see_task_modify_links_for_tasks_created_by_them(self):
+        self.register('Howard', 'ho@ward.com', 'password', 'password')
+        self.login('Howard', 'password')
+        self.app.get('tasks/', follow_redirects=True)
+        self.create_task()
+        self.logout()
+        self.register('Hamlet', 'ham@let.com', 'password', 'password')
+        self.login('Hamlet', 'password')
+        self.app.get('tasks/', follow_redirects=True)
+        response = self.create_task()
+        self.assertIn(b'complete/2/', response.data)
+        self.assertIn(b'delete/2/', response.data)
+
+
+    def test_admin_users_can_see_task_modify_links_for_all_tasks(self):
+        self.register('Howard', 'ho@ward.com', 'password', 'password')
+        self.login('Howard', 'password')
+        self.app.get('tasks/', follow_redirects=True)
+        self.create_task()
+        self.logout()
+        self.create_admin_user()
+        self.login('Superman', 'password')
+        self.app.get('tasks/', follow_redirects=True)
+        response = self.create_task()
+        self.assertIn(b'complete/1/', response.data)
+        self.assertIn(b'delete/1/', response.data)
+        self.assertIn(b'complete/2/', response.data)
+        self.assertIn(b'delete/2/', response.data)
+
+
 if __name__ == "__main__":
     unittest.main()

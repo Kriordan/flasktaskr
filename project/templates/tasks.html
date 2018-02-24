@@ -49,8 +49,10 @@
       <div class="col-sm"><small>Priority: {{ task.priority }}</small></div>
       <div class="col-sm"><small>By: {{ task.poster.name }}</small></div>
       <div class="col-sm">
+        {% if task.poster.name == session.name or session.role == 'admin' %}
           <a href="{{ url_for('tasks.delete_entry', task_id = task.task_id) }}" class="btn btn-outline-danger btn-sm" role="button">Delete</a>
           <a href="{{ url_for('tasks.complete', task_id = task.task_id) }}" class="btn btn-outline-success btn-sm" role="button">Complete</a>
+        {% endif %}
       </div>
     </div>
   {% endfor %}
