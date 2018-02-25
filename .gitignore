@@ -7,3 +7,5 @@ project/_config.py
 /tags
 .coverage
 /htmlcov
+error.log
+.vscode/
