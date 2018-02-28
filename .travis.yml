@@ -1,0 +1,18 @@
+language:
+- python
+python:
+- '3.6'
+- '2.7'
+install:
+- pip install -r requirements.txt
+script:
+- nosetests
+deploy:
+  provider: heroku
+  api_key:
+    secure: JIyEsQYEJJ4LXETJ+LWq6w1HXTFIOz+d/89mxzeIr9vbyids27TsEEXOFZiqBDHGaZsNJGWUrJycM73v0mGo4s1TauXTB9plQL7KE/LbiFId6BqUZxSKOkQdhkCqb2RdwSrggSVYpnfq7uNZ83okhaSZ/8WxqpC5qAjFG7aeor3mTEHfuUWW55g6yh8WKuP0lBeQaxVwFhvfwKL9TNB9gBcZBHvTNH8M5B8QqewOcMWPv2W0g62UB/MNdnI/3QF3t5CoGqdgfEadZLShS0xAojtJG3PH85GL+j4vM2pjnHj5OqBiwr1QpYrnOWEZoKPo+V5Qn7K5CX+a+H2p5fFv//V2re2I0UZaPavsae5MlwdC+bRBMaIGgyh4m5ghKQ7Rp8qP39BGF3cI5JB5XEVD+UC9ZHq7qwP/CSqFMLZk/nR4wSqG4LsI4s45DTsuxKU6MM7RFnp/zjQezP2zR7PVkVg+QCROE4aerQvBSkVSfTYt8pUcLlY1uvaA17PgYDZ7nyRIL5DcDjFHiY6F69ch5XEX6E3WwC4dTI22FnJXmMrlecFyZNMa2xkNQaC3mYDrizd1imXmOEoDGS1t2TbR3EL1rOsyWM6IF8iHNnTW7aCjcJr2Fox5sJ6Id7t5ohpwDKvvy54sI/23ueP2SP7kvQWy5Z6iO/qbeA7+GI/CfOA=
+  app: nameless-headland-75712
+  on:
+    repo: Kriordan/flasktaskr
+    branch: master
+    python: '3.6'
